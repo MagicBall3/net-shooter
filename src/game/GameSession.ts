@@ -56,11 +56,15 @@ export class GameSession {
     this.engine = new Engine(canvas, options.settings.quality);
     this.engine.scene.add(this.engine.camera);
 
-    const hemi = new THREE.HemisphereLight(0xffffff, 0x444444, CONFIG.lighting.hemisphereIntensity);
+    const hemi = new THREE.HemisphereLight(0xffffff, 0xaaaaaa, CONFIG.lighting.hemisphereIntensity * 1.5);
     this.engine.scene.add(hemi);
-    const dir = new THREE.DirectionalLight(0xffffff, 0.8);
-    dir.position.set(10, 20, 10);
+    const dir = new THREE.DirectionalLight(0xffffff, 1.2);
+    dir.position.set(15, 25, 10);
     dir.castShadow = true;
+    dir.shadow.camera.left = -15;
+    dir.shadow.camera.right = 15;
+    dir.shadow.camera.top = 15;
+    dir.shadow.camera.bottom = -15;
     this.engine.scene.add(dir);
 
     this.world = new World();
@@ -73,6 +77,17 @@ export class GameSession {
     this.sources = this.input.sources;
     this.camera = new FirstPersonCamera(this.engine.camera, this.player, () => this.settings);
     const controller = new PlayerController(this.player, this.input, () => this.settings);
+
+    // Оружие от первого лица (простой куб-пистолет в нижнем углу экрана)
+    const weaponMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(0.25, 0.2, 0.6),
+      new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.5, metalness: 0.6 }),
+    );
+    weaponMesh.position.set(0.4, -0.15, -0.9);
+    weaponMesh.rotation.set(-0.2, 0.1, 0);
+    weaponMesh.castShadow = true;
+    this.engine.camera.add(weaponMesh);
+    this.world.addWeapon(weaponMesh);
 
     this.health = new Health(100);
     this.state = { health: this.health, myId: null, connected: false };

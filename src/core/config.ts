@@ -15,8 +15,8 @@ export const CONFIG = {
   maxDelta: 0.05,
   camera: { fov: 75, near: 0.05, far: 200 },
   world: {
-    fogColor: 0x111811,
-    fogDensity: 0.015,
+    fogColor: 0x2a332a,
+    fogDensity: 0.008,
     height: 3,
   },
   lighting: {

@@ -31,5 +31,6 @@ export class TouchControls implements InputSource {
     this.lookX = 0;
     this.lookY = 0;
     this.shoot = false;
+    this.run = false;
   }
 }
