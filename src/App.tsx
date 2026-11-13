@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { audio } from './audio/AudioManager';
-import { isTouchDevice } from './core/platform';
+import { enterImmersive, isTouchDevice, leaveImmersive } from './core/platform';
 import type { GamePhase, Settings } from './core/types';
 import { MainMenu } from './ui/MainMenu';
 import { MultiplayerMenu } from './ui/MultiplayerMenu';
@@ -24,25 +24,31 @@ export default function App() {
   const [room, setRoom] = useState('');
   const [showSettings, setShowSettings] = useState(false);
 
-  const startSingle = useCallback(() => {
+  const startSingle = useCallback(async () => {
     void audio.start();
+    if (isTouch) await enterImmersive();
     setMultiplayer(false);
     setRoom('');
     setPhase('playing');
-  }, []);
+  }, [isTouch]);
 
-  const startMultiplayer = useCallback((r: string) => {
-    void audio.start();
-    setMultiplayer(true);
-    setRoom(r);
-    setPhase('playing');
-  }, []);
+  const startMultiplayer = useCallback(
+    async (r: string) => {
+      void audio.start();
+      if (isTouch) await enterImmersive();
+      setMultiplayer(true);
+      setRoom(r);
+      setPhase('playing');
+    },
+    [isTouch]
+  );
 
   const exitToMenu = useCallback(() => {
     audio.suspend();
+    if (isTouch) void leaveImmersive();
     setShowSettings(false);
     setPhase('menu');
-  }, []);
+  }, [isTouch]);
 
   const togglePause = useCallback(() => {
     setPhase((p) => (p === 'playing' ? 'paused' : 'playing'));

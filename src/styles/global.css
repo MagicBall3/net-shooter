@@ -1,14 +1,30 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
+html, body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background: #0b0b0b;
   color: #e5e5e5;
   overflow: hidden;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+  touch-action: none;
 }
 
-#root { height: 100%; }
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root { height: 100%; width: 100%; }
+
+/* Скрываем адресную строку на мобильных при полноэкранном режиме */
+:fullscreen .game-root,
+:webkit-fullscreen .game-root {
+  height: 100%;
+  width: 100%;
+}
+
 
 .screen {
   height: 100vh;
@@ -174,9 +190,99 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background: #000;
+  touch-action: none;
 }
 
-.game-viewport { width: 100%; height: 100%; }
+.game-viewport { width: 100%; height: 100%; display: block; }
+
+.game-viewport canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  touch-action: none;
+}
+
+/* Touch overlay */
+.touch-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  z-index: 40;
+}
+
+.touch-overlay * { pointer-events: auto; }
+
+.touch-joystick-base {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.touch-joystick-knob {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 210, 255, 0.85);
+  border: 2px solid #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
+}
+
+.touch-btn {
+  position: relative;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.touch-btn:active { background: rgba(0, 210, 255, 0.3); border-color: #00d2ff; }
+
+.touch-shoot { background: rgba(255, 60, 60, 0.2); border-color: rgba(255, 60, 60, 0.5); }
+.touch-shoot:active { background: rgba(255, 60, 60, 0.5); border-color: #ff3c3c; }
+
+.touch-run { border-color: rgba(0, 210, 255, 0.35); }
+.touch-run:active { border-color: #00d2ff; }
+
+.touch-pause {
+  width: 56px; height: 56px;
+  font-size: 0.75rem;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Настройка HUD под мобильные */
+@media (max-width: 640px) {
+  .health-panel { width: 170px; bottom: 20px; left: 12px; }
+  .health-bar { height: 8px; }
+  .health-value { font-size: 0.8rem; }
+  .ammo-panel { font-size: 0.9rem; bottom: 20px; right: 12px; letter-spacing: 1px; }
+  .crosshair { width: 16px; height: 16px; }
+  .crosshair::after { width: 3px; height: 3px; }
+}
+
+/* Планшеты — чуть крупнее кнопки */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .touch-btn { width: 84px; height: 84px; font-size: 0.95rem; }
+  .touch-joystick-base { width: 130px; height: 130px; }
+}
 
 .hud {
   position: absolute;

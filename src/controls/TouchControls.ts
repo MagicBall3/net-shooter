@@ -1,7 +1,7 @@
 import type { InputFrame } from './InputTypes';
 import { type InputSource } from './InputTypes';
 
-/** Упрощённое тач-управление (передаётся извне через overlay). */
+/** Упрощённое тач-управление (обновляется из TouchOverlay). */
 export class TouchControls implements InputSource {
   moveForward = 0;
   moveRight = 0;

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { TouchControls } from '../controls/TouchControls';
 import type { Settings } from '../core/types';
 import { HUD } from '../ui/HUD';
+import { TouchOverlay } from '../ui/TouchOverlay';
 import { GameSession, type GameState } from './GameSession';
 
 interface Props {
@@ -85,6 +86,7 @@ export default function GameCanvas({
       {!paused && (
         <HUD health={health ? health.value : 100} maxHealth={health ? health.max : 100} ammo={ammo} />
       )}
+      {isTouch && !paused && <TouchOverlay controls={touch} onPause={onPause} />}
     </div>
   );
 }

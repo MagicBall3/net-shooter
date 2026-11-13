@@ -22,7 +22,7 @@ export const t = {
   game: {
     health: 'Здоровье',
     pause: 'Пауза',
-    shoot: 'Стрелять',
+    shoot: 'Огонь',
     run: 'Бег',
   },
   multiplayer: {
