@@ -39,7 +39,6 @@ export function TouchOverlay({ controls, onPause }: Props) {
       e.preventDefault();
       e.stopPropagation();
       const touch = e.touches[0];
-      // Джойстик только в левой половине экрана
       if (touch.clientX < window.innerWidth * 0.45) {
         joyActive.current = true;
         const { dx, dy } = getJoyPos(touch.clientX, touch.clientY);
@@ -74,7 +73,7 @@ export function TouchOverlay({ controls, onPause }: Props) {
     controls.moveRight = 0;
   }, []);
 
-  // Обзор — правая половина экрана (кроме кнопок)
+  // Обзор — правая половина экрана
   const onLookStart = useCallback(
     (e: React.TouchEvent) => {
       e.preventDefault();

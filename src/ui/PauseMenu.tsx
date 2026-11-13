@@ -10,10 +10,13 @@ export function PauseMenu({ onResume, onSettings, onExit }: Props) {
   return (
     <div
       style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'rgba(0, 0, 0, 0.8)',
-        zIndex: 60,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'rgba(0, 0, 0, 0.85)',
+        zIndex: 100,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -21,13 +24,14 @@ export function PauseMenu({ onResume, onSettings, onExit }: Props) {
     >
       <div
         style={{
-          background: 'rgba(20, 20, 20, 0.9)',
+          background: '#1a1a1a',
           padding: 32,
           borderRadius: 12,
           textAlign: 'center',
           minWidth: 260,
           color: '#fff',
           border: '1px solid #444',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
         }}
       >
         <h2 style={{ color: '#fff', marginBottom: 20 }}>{t.pause.title}</h2>
