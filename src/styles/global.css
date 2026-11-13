@@ -209,9 +209,13 @@ body {
   inset: 0;
   pointer-events: none;
   display: flex;
-  justify-content: space-between;
-  padding: 12px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 12px;
   z-index: 40;
+  touch-action: none;
 }
 
 .touch-overlay * { pointer-events: auto; }
@@ -223,6 +227,7 @@ body {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
   border: 2px solid rgba(255, 255, 255, 0.25);
+  touch-action: none;
 }
 
 .touch-joystick-knob {
@@ -236,8 +241,15 @@ body {
   box-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
 }
 
+.touch-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  margin-left: auto;
+}
+
 .touch-btn {
-  position: relative;
   width: 72px; height: 72px;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.35);
@@ -252,6 +264,7 @@ body {
   letter-spacing: 0.5px;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
 }
 
 .touch-btn:active { background: rgba(0, 210, 255, 0.3); border-color: #00d2ff; }
@@ -266,6 +279,22 @@ body {
   width: 56px; height: 56px;
   font-size: 0.75rem;
   border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Настройка HUD под мобильные */
+@media (max-width: 640px) {
+  .health-panel { width: 170px; bottom: 20px; left: 12px; }
+  .health-bar { height: 8px; }
+  .health-value { font-size: 0.8rem; }
+  .ammo-panel { font-size: 0.9rem; bottom: 20px; right: 12px; letter-spacing: 1px; }
+  .crosshair { width: 16px; height: 16px; }
+  .crosshair::after { width: 3px; height: 3px; }
+}
+
+/* Планшеты — чуть крупнее кнопки */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .touch-btn { width: 84px; height: 84px; font-size: 0.95rem; }
+  .touch-joystick-base { width: 130px; height: 130px; }
 }
 
 /* Настройка HUD под мобильные */
